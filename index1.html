@@ -176,6 +176,17 @@
             dd.rect(30, i * 35, 30, 20);
             dd.fill();
         }
+        
+        
+        
+         //中间空圆
+        dd.save();
+        dd.beginPath();
+        dd.fillStyle = 'white';
+        dd.moveTo(300,250);
+        dd.arc(300,250,70,0,deg*360);
+        dd.fill();
+        dd.restore();
     </script>
 </body>
 
