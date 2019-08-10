@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        var canvas = document.createElement('canvas');
+        canvas.width = 500;
+        canvas.height = 500;
+        canvas.style.border = 'solid 1px red';
+        document.body.appendChild(canvas);
+        var dd = canvas.getContext('2d');
+        var deg = Math.PI / 180;
+
+        //网格
+        for (var i = 50; i < 500; i += 50) {
+            //x轴网格
+            dd.beginPath();
+            dd.moveTo(0, i);
+            dd.lineTo(500, i);
+            dd.lineTo(0, i);
+
+
+            //y轴网格
+            dd.moveTo(i, 0);
+            dd.lineTo(i, 0);
+            dd.lineTo(i, 500);
+            dd.stroke();
+        }
+
+        //圆
+        dd.save();
+        dd.beginPath();
+        dd.fillStyle = 'yellow';
+        dd.moveTo(250, 250);
+        dd.arc(250, 250, 150, 0, deg * 360, true);
+        dd.fill();
+        dd.restore();
+
+        //缺口
+        dd.save();
+        dd.beginPath();
+        dd.fillStyle = 'white';
+        dd.moveTo(250, 250);
+        dd.arc(250, 250, 150, 0, deg * 350, true);
+        dd.fill();
+        dd.restore();
+
+        //汗条
+        dd.save();
+        dd.beginPath();
+        dd.lineWidth = 4;
+        dd.strokeStyle = '#999'
+
+        dd.moveTo(225, 110);
+        dd.lineTo(225, 140);
+
+        dd.moveTo(235, 110);
+        dd.lineTo(235, 140);
+
+        dd.moveTo(245, 110);
+        dd.lineTo(245, 140);
+
+        dd.moveTo(255, 110);
+        dd.lineTo(255, 140);
+
+        dd.moveTo(265, 110);
+        dd.lineTo(265, 140);
+
+        dd.moveTo(275, 110);
+        dd.lineTo(275, 140);
+
+        dd.moveTo(285, 110);
+        dd.lineTo(285, 140);
+
+        dd.stroke();
+        dd.restore();
+
+        //眼睛
+        dd.save();
+        dd.beginPath();
+        dd.fillStyle = 'white';
+        dd.moveTo(320, 180);
+        dd.arc(320, 180, 15, 0, deg * 360);
+        dd.fill();
+        dd.restore();
+
+        //眼仁
+        dd.save();
+        dd.beginPath();
+        dd.moveTo(330, 185);
+        dd.arc(330, 185, 5, 0, deg * 360);
+        dd.fill();
+        dd.restore();
+
+
+
+        var canvas = document.createElement('canvas');
+        canvas.width = 500;
+        canvas.height = 500;
+        canvas.style.border = 'solid 1px red';
+        document.body.appendChild(canvas);
+        var dd = canvas.getContext('2d');
+        var deg = Math.PI / 180;
+
+
+
+            var data = [
+            { value: 335, name: '直接访问', color: "rgb(213, 58, 53)" },
+            { value: 310, name: '邮件营销', color: "rgb(51, 75, 92)" },
+            { value: 234, name: '联盟广告', color: "rgb(106, 176, 184)" },
+            { value: 135, name: '视频广告', color: "rgb(233, 143, 111)" },
+            { value: 1548, name: '搜索引擎', color: "rgb(145, 199, 174)" }
+        ]
+
+
+        //拿到value、
+        var valuem = data.map(function (item) {
+            return item.value
+        })
+        console.log(valuem)
+
+        //求出data。value的和
+        var valuesum = valuem.reduce(function (pre, cur) {
+            return pre + cur
+        })
+        // console.log(valuesum);
+
+        //求出value数组里面的每一项所占圆的角度
+        var degarr1 = [];
+        for (var i = 0; i < valuem.length; i++) {
+            //每一个度数
+            var mdeg = valuem[i] / valuesum * 360;
+            degarr1.push(mdeg);
+        }
+        // console.log(degarr1);
+
+
+        //拿到color数组
+        var colorsum = data.map(function (item) {
+            return item.color
+        })
+        // console.log(colorsum)
+
+
+        //渲染数据
+        dd.save();
+        var startdeg = -90;
+        for (var i = 0; i < data.length; i++) {
+            dd.beginPath();
+            var enddeg = degarr1[i];
+            dd.moveTo(300, 250);
+            dd.fillStyle = colorsum[i];
+            dd.arc(300, 250, 100, startdeg * deg, (startdeg + enddeg) * deg);
+            dd.closePath();
+            dd.fill();
+            startdeg += enddeg;
+        }
+        dd.restore();
+
+
+
+
+        //左上
+        for (var i = 0; i < data.length; i++) {
+            dd.beginPath();
+            dd.fillStyle = colorsum[i];
+            dd.fillText(data[i].name, 70, i * 35 + 15);
+            dd.moveTo(30, i * 35);
+            dd.rect(30, i * 35, 30, 20);
+            dd.fill();
+        }
+    </script>
+</body>
+
+</html>
